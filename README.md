@@ -35,7 +35,7 @@ Bem-vindo ao repositório da Loja de Roupas! Este projeto é uma aplicação web
 
 ## Como Usar
 1. Clone o repositório.
-2. Abra o arquivo `produtos.html` em um navegador.
+2. Abra o arquivo `index.html` em um navegador.
 3. Explore os produtos, use a barra de pesquisa para encontrar itens específicos e adicione produtos ao carrinho.
 
 ## Licença
