@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Loja de Roupas</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .purchase-menu {
+            display: none; /* Inicialmente oculto */
+            margin-top: 10px;
+            background: var(--light-pink);
+            padding: 10px;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav">
+            <div class="logo">Minha Loja de Roupas</div>
+            <nav>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="produtos.html" class="nav-link">Produtos</a>
+                <a href="contato.html" class="nav-link">Contato</a>
+                <a href="carrinho.html" class="nav-link" id="cart-link">Carrinho (<span id="cart-count">0</span>)</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Pesquisar produtos...">
+            <button id="search-button">Pesquisar</button>
+            <button id="reset-button" style="display: none;">Voltar</button>
+        </div>
+
+        <h1>Produtos</h1>
+        <div class="product-grid" id="product-grid">
+            <!-- Os produtos serão inseridos aqui pelo JavaScript -->
+        </div>
+
+        <h2>Produtos em Destaque</h2>
+        <div class="featured-products" id="featured-products">
+            <!-- Produtos em destaque inseridos aqui -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-category">
+            <h2 class="footer-category-title">Sobre Nós</h2>
+            <p class="footer-category-link">Sua loja de roupas online favorita.</p>
+        </div>
+        <div class="footer-category">
+            <h2 class="footer-category-title">Contato</h2>
+            <p class="footer-category-link">Email: contato@lojaderoupas.com</p>
+        </div>
+    </footer>
+
+    <script>
+        const products = [
+            {
+                title: "Camisa Casual",
+                price: "R$ 79,90",
+                image: "products/1.jpg",
+                featured: true
+            },
+            {
+                title: "Calça Jeans",
+                price: "R$ 99,90",
+                image: "products/2.jpg",
+                featured: false
+            },
+            {
+                title: "Vestido Estampado",
+                price: "R$ 129,90",
+                image: "products/3.jpg",
+                featured: true
+            },
+            {
+                title: "Jaqueta de Couro",
+                price: "R$ 199,90",
+                image: "products/4.jpg",
+                featured: false
+            },
+            {
+                title: "Camisa de Manga Longa",
+                price: "R$ 89,90",
+                image: "products/belt.jpg",
+                featured: true
+            }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Função para renderizar os produtos na grid principal
+        function renderProducts(productsToRender) {
+            const productGrid = document.getElementById('product-grid');
+            productGrid.innerHTML = ''; 
+            productsToRender.forEach(product => {
+                const card = createProductCard(product);
+                productGrid.appendChild(card);
+            });
+        }
+
+        // Função para renderizar os produtos em destaque
+        function renderFeaturedProducts() {
+            const featuredProducts = document.getElementById('featured-products');
+            featuredProducts.innerHTML = ''; 
+            products.forEach(product => {
+                if (product.featured) {
+                    const card = createProductCard(product);
+                    featuredProducts.appendChild(card);
+                }
+            });
+        }
+
+        // Função para criar um card de produto
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.classList.add('product-card');
+
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.title}" class="product-image">
+                <h3 class="product-title">${product.title}</h3>
+                <p class="product-price">${product.price}</p>
+                <button class="toggle-menu">Comprar</button>
+                <div class="purchase-menu">
+                    <label for="name-input">Nome:</label>
+                    <input type="text" class="name-input" placeholder="Seu nome">
+                    <label for="size-input">Tamanho:</label>
+                    <input type="text" class="size-input" placeholder="Tamanho da roupa">
+                    <label for="city-input">Cidade:</label>
+                    <input type="text" class="city-input" placeholder="Sua cidade">
+                    <label for="address-input">Endereço:</label>
+                    <input type="text" class="address-input" placeholder="Seu endereço">
+                    <button class="add-to-cart" data-title="${product.title}">Adicionar ao Carrinho</button>
+                </div>
+            `;
+
+            // Adicionar evento para alternar o menu de compra
+            const toggleMenuButton = card.querySelector('.toggle-menu');
+            toggleMenuButton.addEventListener('click', (event) => {
+                const menu = event.target.nextElementSibling;
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block'; 
+            });
+
+            // Adicionar evento para adicionar ao carrinho
+            const addToCartButton = card.querySelector('.add-to-cart');
+            addToCartButton.addEventListener('click', (event) => {
+                const title = event.target.dataset.title;
+                const name = card.querySelector('.name-input').value;
+                const size = card.querySelector('.size-input').value;
+                const city = card.querySelector('.city-input').value;
+                const address = card.querySelector('.address-input').value;
+                addToCart(title, name, size, city, address);
+            });
+
+            return card;
+        }
+
+        // Função para adicionar produtos ao carrinho
+        function addToCart(title, name, size, city, address) {
+            const product = products.find(p => p.title === title);
+            if (product) {
+                const cartItem = {
+                    ...product,
+                    name,
+                    size,
+                    city,
+                    address
+                };
+                cart.push(cartItem);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                alert(`${title} foi adicionado ao carrinho!`);
+            }
+        }
+
+        // Função para atualizar o contador do carrinho
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            cartCount.innerText = cart.length;
+        }
+
+        // Função para buscar produtos
+        function searchProducts() {
+            const searchInput = document.getElementById('search-input');
+            const searchTerm = searchInput.value.toLowerCase();
+            const productGrid = document.getElementById('product-grid');
+            const resetButton = document.getElementById('reset-button');
+
+            const filteredProducts = products.filter(product =>
+                product.title.toLowerCase().includes(searchTerm)
+            );
+
+            renderProducts(filteredProducts);
+
+            // Mostrar ou ocultar o botão de redefinir
+            resetButton.style.display = filteredProducts.length > 0 ? 'block' : 'none';
+        }
+
+        // Função para redefinir a pesquisa
+        function resetSearch() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.value = ''; // Limpar o campo de busca
+            renderProducts(products); // Renderizar todos os produtos
+            document.getElementById('reset-button').style.display = 'none'; // Ocultar o botão de redefinir
+        }
+
+        // Adicionar evento ao botão de busca
+        document.getElementById('search-button').addEventListener('click', searchProducts);
+        // Adicionar evento ao botão de redefinir
+        document.getElementById('reset-button').addEventListener('click', resetSearch);
+
+        // Renderizar produtos e produtos em destaque na inicialização
+        renderProducts(products);
+        renderFeaturedProducts();
+        updateCartCount();
+    </script>
+</body>
+</html>

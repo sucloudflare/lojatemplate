@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - Loja de Roupas</title>
+    <link rel="stylesheet" href="styles01.css">
+</head>
+<body>
+    <header class="header">
+        <div class="nav">
+            <div class="logo">Minha Loja de Roupas</div>
+            <nav>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="produtos.html" class="nav-link">Produtos</a>
+                <a href="contato.html" class="nav-link">Contato</a>
+                <a href="carrinho.html" class="nav-link" id="cart-link">Carrinho (<span id="cart-count">0</span>)</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Carrinho de Compras</h1>
+        <div id="warning" style="color: red; display: none;">
+            Os produtos irão desaparecer em 4 minutos!
+        </div>
+        <div id="cart-items">
+            <!-- Itens do carrinho serão inseridos aqui pelo JavaScript -->
+        </div>
+        <div id="total-price">
+            <h2>Total: <span id="total">R$ 0,00</span></h2>
+        </div>
+        <button id="send-to-whatsapp">Enviar para WhatsApp</button>
+        <div id="confirmation" style="display: none;">
+            <p>Você deseja enviar as informações para o WhatsApp?</p>
+            <button id="confirm-send">Sim</button>
+            <button id="cancel-send">Não</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-category">
+            <h2 class="footer-category-title">Sobre Nós</h2>
+            <p class="footer-category-link">Sua loja de roupas online favorita, comprometida com a qualidade.</p>
+        </div>
+        <div class="footer-category">
+            <h2 class="footer-category-title">Contato</h2>
+            <p class="footer-category-link">Email: contato@lojaderoupas.com</p>
+            <p class="footer-category-link">Telefone: (11) 98765-4321</p>
+        </div>
+    </footer>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function renderCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = ''; // Limpa itens do carrinho
+            let total = 0;
+
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                    <p><strong>${item.title}</strong> - ${item.price}</p>
+                    <p><strong>Nome:</strong> ${item.name}</p>
+                    <p><strong>Tamanho:</strong> ${item.size}</p>
+                    <p><strong>Cidade:</strong> ${item.city}</p>
+                    <p><strong>Endereço:</strong> ${item.address}</p>
+                    <hr>
+                `;
+                cartItems.appendChild(cartItem);
+
+                // Soma o valor ao total
+                total += parseFloat(item.price.replace('R$ ', '').replace(',', '.'));
+            });
+
+            // Atualiza o total no carrinho
+            document.getElementById('total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        document.getElementById('send-to-whatsapp').addEventListener('click', () => {
+            document.getElementById('confirmation').style.display = 'block';
+        });
+
+        document.getElementById('confirm-send').addEventListener('click', () => {
+            const message = cart.map(item => `${item.title} - ${item.price} \nNome: ${item.name} \nTamanho: ${item.size} \nCidade: ${item.city} \nEndereço: ${item.address}`).join('%0A%0A');
+            const totalMessage = `Total: ${document.getElementById('total').innerText}`;
+            const phoneNumber = '5574988672208'; // Substitua pelo número desejado
+            const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}%0A${totalMessage}`;
+            window.open(whatsappLink, '_blank');
+
+            // Limpa o carrinho após o envio
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart(); // Atualiza a visualização do carrinho
+        });
+
+        document.getElementById('cancel-send').addEventListener('click', () => {
+            document.getElementById('confirmation').style.display = 'none';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+
+            // Exibe aviso e remove produtos após 4 minutos
+            document.getElementById('warning').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('cart-items').innerHTML = '<p>Produtos removidos.</p>';
+            }, 240000); // 4 minutos em milissegundos
+        });
+    </script>
+</body>
+</html>

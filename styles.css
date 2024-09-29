@@ -1,0 +1,376 @@
+:root {
+    --white: #ffffff;
+    --eerie-black: #799597;
+    --sonic-silver: #000000;
+    --salmon-pink: #ff6f61;
+    --light-pink: #ffe6e6;
+    --soft-lavender: #e6d9ff;
+    --border-radius-md: 12px;
+    --fs-1: 2rem;
+    --fs-2: 1.5rem;
+    --fs-5: 1.125rem;
+    --fs-6: 0.9rem;
+    --weight-600: 600;
+    --transition-timing: 0.3s ease;
+}
+
+/*-----------------------------------*\
+  #HEADER
+\*-----------------------------------*/
+.header {
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo {
+    font-size: var(--fs-1);
+    color: var(--salmon-pink);
+    font-weight: var(--weight-600);
+}
+
+.header .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .nav-link {
+    color: var(--eerie-black);
+    margin: 0 20px;
+    font-size: var(--fs-6);
+    text-transform: capitalize;
+    transition: var(--transition-timing);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-md);
+    text-decoration: none; /* Remove underline */
+}
+
+/*-----------------------------------*\
+  #BODY
+\*-----------------------------------*/
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, var(--eerie-black) 50%, var(--white) 50%); /* Gradiente de preto para branco */
+}
+
+/*-----------------------------------*\
+  #SEARCH BAR
+\*-----------------------------------*/
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#search-input {
+    padding: 12px;
+    font-size: var(--fs-6);
+    border: none; /* Remove a borda */
+    border-radius: var(--border-radius-md);
+    width: 250px; /* Tamanho fixo para a barra de pesquisa */
+}
+
+#search-button {
+    padding: 12px 18px;
+    background: var(--salmon-pink);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background var(--transition-timing);
+}
+
+#search-button:hover {
+    background: #e94e4a;
+}
+
+/*-----------------------------------*\
+  #PRODUCT
+\*-----------------------------------*/
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 5px;
+}
+
+.product-card {
+    background: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform var(--transition-timing);
+    margin: 15px;
+    padding: 20px; /* Adiciona padding ao card */
+    text-align: center; /* Centraliza o conteúdo do card */
+}
+
+.product-card:hover {
+    transform: scale(1.03);
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+}
+
+.product-title {
+    font-size: var(--fs-5);
+    font-weight: var(--weight-600);
+    color: var(--eerie-black);
+    margin: 10px 0; /* Margem ajustada */
+}
+
+.product-price {
+    font-size: var(--fs-6);
+    color: var(--salmon-pink);
+    margin: 10px 0; /* Margem ajustada */
+}
+
+.add-to-cart {
+    background: var(--salmon-pink);
+    color: var(--white);
+    padding: 10px 20px; /* Aumenta o padding */
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-size: var(--fs-6);
+    transition: background var(--transition-timing);
+    display: inline-block; /* Permite que o botão seja centralizado */
+    margin-top: 20px; /* Aumenta a margem acima do botão */
+    width: 100%; /* Faz o botão ocupar a largura total do card */
+}
+
+.add-to-cart:hover {
+    background: #e94e4a;
+}
+
+/*-----------------------------------*\
+  #FOOTER
+\*-----------------------------------*/
+footer {
+    background: var(--eerie-black);
+    color: var(--white);
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 40px; /* Movei para cá */
+}
+
+.footer-category {
+    margin-bottom: 20px;
+}
+
+.footer-category-title {
+    font-size: var(--fs-2);
+    font-weight: var(--weight-600);
+    margin-bottom: 10px;
+}
+
+.footer-category-link {
+    color: var(--sonic-silver);
+    font-size: var(--fs-6);
+    text-transform: capitalize;
+}
+
+/*-----------------------------------*\
+  #FEATURED PRODUCTS
+\*-----------------------------------*/
+.featured-products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Diminui o espaço entre os produtos */
+    justify-content: center;
+    padding: 20px;
+}
+
+.featured-products .product-card {
+    width: 220px; /* Ajusta a largura do cartão do produto */
+    flex: 0 0 auto; /* Impede que o cartão seja flexível */
+}
+
+.featured-products h2 {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.banner {
+    width: 100vw;
+    height: 250px;
+    background-size: cover;
+    margin: 20px 0;
+    border-radius: var(--border-radius-md);
+    text-align: center; /* Centraliza o conteúdo */
+}
+
+.banner img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-md);
+}
+
+.banner p {
+    margin-top: 10px; /* Espaçamento entre a imagem e o texto */
+    font-size: var(--fs-5);
+    color: var(--eerie-black);
+}
+
+/*-----------------------------------*\
+  #INTRO TEXT
+\*-----------------------------------*/
+.intro-text {
+    display: flex;
+    flex-direction: column; /* Alinha os parágrafos verticalmente */
+    gap: 10px; /* Espaçamento entre os parágrafos */
+}
+
+.intro-text p {
+    margin: 0; /* Remove a margem padrão dos parágrafos */
+}
+
+/*-----------------------------------*\
+  #CONTACT FORM
+\*-----------------------------------*/
+main {
+    padding: 40px;
+    text-align: center;
+}
+
+h1 {
+    font-size: var(--fs-2);
+    color: var(--salmon-pink);
+    margin-bottom: 20px;
+}
+
+#contact-form {
+    background: var(--light-pink);
+    padding: 20px;
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: var(--weight-600);
+    margin-bottom: 5px;
+    color: var(--eerie-black);
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--sonic-silver);
+    border-radius: var(--border-radius-md);
+    font-size: var(--fs-6);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: var(--salmon-pink);
+    outline: none;
+}
+
+button {
+    background: var(--salmon-pink);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-size: var(--fs-6);
+    transition: background var(--transition-timing);
+}
+
+button:hover {
+    background: #e94e4a;
+}
+
+
+/*-----------------------------------*\
+  #RESPONSIVE
+\*-----------------------------------*/
+@media (max-width: 768px) {
+    /* Ajustes para a barra de navegação */
+    .header .nav {
+        flex-direction: column; /* Alinha os itens em coluna */
+        align-items: center; /* Centraliza os itens */
+    }
+
+    .header .nav-link {
+        margin: 10px 0; /* Margem ajustada para espaçamento */
+    }
+    
+    .footer-catego{}
+
+    .banner {
+        width: 100%;
+        margin-bottom: -210px;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    /* Ajustes para a grade de produtos */
+    .product-grid {
+        grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+    }
+
+    .product-card {
+        margin: 10px; /* Reduz a margem dos cartões */
+        padding: 15px; /* Reduz o padding dos cartões */
+    }
+
+    /* Ajustes para cabeçalhos e parágrafos */
+    h1 {
+        font-size: 1.5rem; /* Reduz o tamanho do título */
+    }
+
+    p {
+        font-size: var(--fs-6); /* Ajusta o tamanho da fonte dos parágrafos */
+        line-height: 1.4; /* Melhora a legibilidade */
+    }
+
+    /* Ajustes para a barra de pesquisa */
+    #search-input {
+        width: 100%; /* Barra de pesquisa ocupa toda a largura */
+        padding: 10px; /* Ajusta o padding */
+    }
+
+    #search-button {
+        width: 100%; /* Botão ocupa toda a largura em telas pequenas */
+        padding: 10px; /* Ajusta o padding do botão */
+        margin-left: 0; /* Remove a margem esquerda */
+    }
+
+    /* Ajustes para imagens */
+    .product-image {
+        width: 100%; /* Imagem ocupa toda a largura do cartão */
+        height: auto; /* Mantém a proporção */
+    }
+
+    /* Ajustes para o botão de adicionar ao carrinho */
+    .add-to-cart {
+        width: 100%; /* Botão ocupa toda a largura do cartão */
+    }
+
+    /* Ajustes para o footer */
+    footer {
+        padding: 20px 0; /* Ajusta o padding do footer */
+    }
+}
